@@ -98,7 +98,7 @@ Ref<const PredictionContext> PredictionContext::merge(const Ref<const Prediction
     return a;
   }
 
-  if (is<const SingletonPredictionContext>(a) && is<const SingletonPredictionContext>(b)) {
+  if (a->isSingletonPredictionContext() && b->isSingletonPredictionContext()) {
     return mergeSingletons(std::dynamic_pointer_cast<const SingletonPredictionContext>(a),
                            std::dynamic_pointer_cast<const SingletonPredictionContext>(b), rootIsWildcard, mergeCache);
   }
@@ -106,23 +106,23 @@ Ref<const PredictionContext> PredictionContext::merge(const Ref<const Prediction
   // At least one of a or b is array.
   // If one is $ and rootIsWildcard, return $ as * wildcard.
   if (rootIsWildcard) {
-    if (is<const EmptyPredictionContext>(a)) {
+    if (a->isEmptyPredictionContext()) {
       return a;
     }
-    if (is<const EmptyPredictionContext>(b)) {
+    if (b->isEmptyPredictionContext()) {
       return b;
     }
   }
 
   // convert singleton so both are arrays to normalize
   Ref<const ArrayPredictionContext> left;
-  if (is<const SingletonPredictionContext>(a)) {
+  if (a->isSingletonPredictionContext()) {
     left = std::make_shared<ArrayPredictionContext>(std::dynamic_pointer_cast<const SingletonPredictionContext>(a));
   } else {
     left = std::dynamic_pointer_cast<const ArrayPredictionContext>(a);
   }
   Ref<const ArrayPredictionContext> right;
-  if (is<const SingletonPredictionContext>(b)) {
+  if (b->isSingletonPredictionContext()) {
     right = std::make_shared<ArrayPredictionContext>(std::dynamic_pointer_cast<const SingletonPredictionContext>(b));
   } else {
     right = std::dynamic_pointer_cast<const ArrayPredictionContext>(b);

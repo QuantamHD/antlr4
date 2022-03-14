@@ -83,6 +83,8 @@ namespace atn {
     /// This means only the EMPTY (wildcard? not sure) context is in set.
     virtual bool isEmpty() const;
     virtual bool hasEmptyPath() const;
+    virtual bool isSingletonPredictionContext() const { return false; }
+    virtual bool isEmptyPredictionContext() const { return false; }
     virtual size_t hashCode() const;
 
   protected:

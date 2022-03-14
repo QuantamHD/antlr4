@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <typeinfo>
+
 #include "support/Any.h"
 
 namespace antlr4 {
@@ -47,6 +49,10 @@ namespace tree {
     virtual std::string toStringTree(Parser *parser, bool pretty = false) = 0;
 
     virtual bool operator == (const ParseTree &other) const;
+
+    virtual bool isErrorNode() const { return false; }
+
+    virtual bool isTerminalNode() const { return false; }
 
     /// The <seealso cref="ParseTreeVisitor"/> needs a double dispatch method.
     // ml: This has been changed to use Any instead of a template parameter, to avoid the need of a virtual template function.

@@ -45,11 +45,13 @@ bool SingletonPredictionContext::operator == (const PredictionContext &o) const 
     return true;
   }
 
-  const SingletonPredictionContext *other = dynamic_cast<const SingletonPredictionContext*>(&o);
-  if (other == nullptr) {
+
+  if (!o.isSingletonPredictionContext()) {
     return false;
   }
 
+  const SingletonPredictionContext *other = dynamic_cast<const SingletonPredictionContext*>(&o);
+  
   if (this->hashCode() != other->hashCode()) {
     return false; // can't be same if hash is different
   }

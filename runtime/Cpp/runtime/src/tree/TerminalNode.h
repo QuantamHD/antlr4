@@ -26,6 +26,8 @@ namespace tree {
      *  @since 4.7
      */
     virtual void setParent(RuleContext *parent) = 0;
+    virtual bool isTerminalNode() const override final { return true; }
+
   };
 
 } // namespace tree

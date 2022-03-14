@@ -829,7 +829,7 @@ void ParserATNSimulator::closureCheckingStopState(Ref<ATNConfig> const& config, 
     std::cout << "closure(" << config->toString(true) << ")" << std::endl;
 #endif
 
-  if (is<RuleStopState *>(config->state)) {
+  if (config->state != nullptr && config->state->isRuleStopState()) {
     // We hit rule end. If we have context info, use it
     // run thru all possible stack tops in ctx
     if (!config->context->isEmpty()) {
@@ -890,11 +890,11 @@ void ParserATNSimulator::closure_(Ref<ATNConfig> const& config, ATNConfigSet *co
       continue;
 
     const Transition *t = p->transitions[i].get();
-    bool continueCollecting = !is<const ActionTransition*>(t) && collectPredicates;
+    bool continueCollecting = (t && !t->isActionTransition()) && collectPredicates;
     Ref<ATNConfig> c = getEpsilonTarget(config, t, continueCollecting, depth == 0, fullCtx, treatEofAsEpsilon);
     if (c != nullptr) {
       int newDepth = depth;
-      if (is<RuleStopState*>(config->state)) {
+      if (config->state->isRuleStopState()) {
         assert(!fullCtx);
 
         // target fell off end of rule; mark resulting c as having dipped into outer context
@@ -944,7 +944,7 @@ void ParserATNSimulator::closure_(Ref<ATNConfig> const& config, ATNConfigSet *co
         }
       }
 
-      if (is<const RuleTransition*>(t)) {
+      if (t != nullptr && t->isRuleTransition()) {
         // latch when newDepth goes negative - once we step out of the entry context we can't return
         if (newDepth >= 0) {
           newDepth++;

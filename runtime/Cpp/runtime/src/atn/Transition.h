@@ -67,6 +67,9 @@ namespace atn {
     virtual bool matches(size_t symbol, size_t minVocabSymbol, size_t maxVocabSymbol) const = 0;
 
     virtual std::string toString() const;
+    virtual bool isActionTransition() const { return false; }
+    virtual bool isRuleTransition() const { return false; }
+
 
     Transition(Transition const&) = delete;
     Transition& operator=(Transition const&) = delete;

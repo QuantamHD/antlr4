@@ -83,7 +83,7 @@ tree::TerminalNode* ParserRuleContext::getToken(size_t ttype, size_t i) {
 
   size_t j = 0; // what token with ttype have we found?
   for (auto *o : children) {
-    if (is<tree::TerminalNode *>(o)) {
+    if (o->isTerminalNode()) {
       tree::TerminalNode *tnode = dynamic_cast<tree::TerminalNode *>(o);
       Token *symbol = tnode->getSymbol();
       if (symbol->getType() == ttype) {
@@ -100,7 +100,7 @@ tree::TerminalNode* ParserRuleContext::getToken(size_t ttype, size_t i) {
 std::vector<tree::TerminalNode *> ParserRuleContext::getTokens(size_t ttype) {
   std::vector<tree::TerminalNode *> tokens;
   for (auto &o : children) {
-    if (is<tree::TerminalNode *>(o)) {
+    if (o->isTerminalNode()) {
       tree::TerminalNode *tnode = dynamic_cast<tree::TerminalNode *>(o);
       Token *symbol = tnode->getSymbol();
       if (symbol->getType() == ttype) {

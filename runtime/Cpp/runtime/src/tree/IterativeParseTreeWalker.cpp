@@ -23,9 +23,9 @@ void IterativeParseTreeWalker::walk(ParseTreeListener *listener, ParseTree *t) c
 
   while (currentNode != nullptr) {
     // pre-order visit
-    if (antlrcpp::is<ErrorNode *>(currentNode)) {
+    if (currentNode->isErrorNode()) {
       listener->visitErrorNode(dynamic_cast<ErrorNode *>(currentNode));
-    } else if (antlrcpp::is<TerminalNode *>(currentNode)) {
+    } else if (currentNode->isTerminalNode()) {
       listener->visitTerminal((TerminalNode *)currentNode);
     } else {
       enterRule(listener, currentNode);
@@ -43,7 +43,7 @@ void IterativeParseTreeWalker::walk(ParseTreeListener *listener, ParseTree *t) c
     // No child nodes, so walk tree.
     do {
       // post-order visit
-      if (!antlrcpp::is<TerminalNode *>(currentNode)) {
+      if (!currentNode->isTerminalNode()) {
         exitRule(listener, currentNode);
       }
 

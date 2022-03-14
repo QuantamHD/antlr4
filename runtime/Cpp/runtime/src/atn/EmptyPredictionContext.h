@@ -19,6 +19,9 @@ namespace atn {
     virtual Ref<const PredictionContext> getParent(size_t index) const override;
     virtual size_t getReturnState(size_t index) const override;
     virtual std::string toString() const override;
+    virtual bool isEmptyPredictionContext() const override final {
+      return true;
+    }
 
     virtual bool operator==(const PredictionContext &o) const override;
   };

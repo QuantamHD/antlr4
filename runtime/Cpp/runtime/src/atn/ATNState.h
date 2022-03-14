@@ -132,6 +132,7 @@ namespace atn {
     virtual bool isNonGreedyExitState() const;
     virtual std::string toString() const;
     virtual ATNStateType getStateType() const = 0;
+    virtual bool isRuleStopState() const { return false; }
 
   private:
     /// Used to cache lookahead during parsing, not used during construction.
